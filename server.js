@@ -14,10 +14,32 @@ app.get('/', function(req, res){
 });
 
 app.get('/new/:url(*)', function(req,res){
+    // first, validate the url
     if(validUrl.isWebUri(req.params.url)) {
-        res.json({'original_url': req.params.url});
+        // check if url already exists in db, if so, send json with response
+        Url.find({ url: req.params.url }, function(err, url){
+            if (err) console.log(err);
+            if (url.length > 0) {
+                res.json(url);
+            } else {
+                var newUrl = Url({
+                    url: req.params.url
+                });
+                newUrl.save(function(err){
+                    if (err) console.log(err);
+                });
+            }
+        });
+        // if it does not exist, create it and return json with response
+        
     } else {
-        res.json({"error": "You did not enter a valid URL"})
+        res.json({"error": "You did not enter a valid URL"});
+    }
+});
+
+app.get('/:short', function(req,res){
+    if(isNaN(req.params.short)) {
+        res.send("You entered an invalid URL");
     }
 });
 
