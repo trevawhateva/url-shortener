@@ -7,7 +7,7 @@ var Url = require('./models/url.js');
 var port = process.env.PORT || 8080;
 
 //mongoose.connect('mongodb://trevolution-camper-api-project-3935373:27017');
-mongoose.connect('mongodb://heroku_qpff8krb:Td873800@ds151697.mlab.com:51697/heroku_qpff8krb');
+mongoose.connect('mongodb://admin:reggie01@ds151697.mlab.com:51697/heroku_qpff8krb');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
